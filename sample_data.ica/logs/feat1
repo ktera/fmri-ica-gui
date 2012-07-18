@@ -1,0 +1,7 @@
+
+/bin/cp /tmp/feat_xaZbgt.fsf design.fsf
+
+mkdir .files;cp /space/raid/fmri/fsl-4.1.9-centos5_64/doc/fsl.css .files;ln -s /space/raid/fmri/fsl-4.1.9-centos5_64/doc/images .files/images
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fsl_sub -T 18 -l logs -N feat2_pre   /space/raid/fmri/fsl-4.1.9-centos5_64/bin/feat /space/raid/home/ktera/fmri-ica-gui/sample_data.ica/design.fsf -D /space/raid/home/ktera/fmri-ica-gui/sample_data.ica -I 1 -prestats
+2272532

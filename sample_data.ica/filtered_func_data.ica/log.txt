@@ -1,0 +1,342 @@
+
+Melodic Version 3.10
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/melodic -i filtered_func_data -o filtered_func_data.ica -v --nobet --bgthreshold=3 --tr=2.0 --report --guireport=../../report.html -d 0 --mmthresh=0.5 --Ostats 
+---------------------------------------------
+
+Melodic results will be in filtered_func_data.ica
+
+Create mask ... done
+Reading data file filtered_func_data  ...  done
+  Estimating data smoothness ...  done 
+  Removing mean image ... done
+  Normalising by voxel-wise variance ... done
+Excluding voxels with constant value ... done
+
+  Data size : 182 x 41701
+
+Starting PCA  ... done
+Start whitening using  30 dimensions ... 
+  retaining 49.378 percent of the variability 
+ ... done
+
+Starting ICA estimation using symm
+
+  Step no. 1 change : 0.983094
+  Step no. 2 change : 0.194532
+  Step no. 3 change : 0.0699936
+  Step no. 4 change : 0.0386513
+  Step no. 5 change : 0.033367
+  Step no. 6 change : 0.0240637
+  Step no. 7 change : 0.0234395
+  Step no. 8 change : 0.0179665
+  Step no. 9 change : 0.0112997
+  Step no. 10 change : 0.00881943
+  Step no. 11 change : 0.00725716
+  Step no. 12 change : 0.00669623
+  Step no. 13 change : 0.00619706
+  Step no. 14 change : 0.0057102
+  Step no. 15 change : 0.00531843
+  Step no. 16 change : 0.0049521
+  Step no. 17 change : 0.00438091
+  Step no. 18 change : 0.00349299
+  Step no. 19 change : 0.00245821
+  Step no. 20 change : 0.00155168
+  Step no. 21 change : 0.000914981
+  Step no. 22 change : 0.000717582
+  Step no. 23 change : 0.000728082
+  Step no. 24 change : 0.00073202
+  Step no. 25 change : 0.00072387
+  Step no. 26 change : 0.000727715
+  Step no. 27 change : 0.000795248
+  Step no. 28 change : 0.000868376
+  Step no. 29 change : 0.000936843
+  Step no. 30 change : 0.000987341
+  Step no. 31 change : 0.00100475
+  Step no. 32 change : 0.000976438
+  Step no. 33 change : 0.00089817
+  Step no. 34 change : 0.000777809
+  Step no. 35 change : 0.000633517
+  Step no. 36 change : 0.000486907
+  Step no. 37 change : 0.000355506
+  Step no. 38 change : 0.000248773
+  Step no. 39 change : 0.000168474
+  Step no. 40 change : 0.000111487
+  Step no. 41 change : 7.27401e-05
+  Step no. 42 change : 4.71731e-05
+  Convergence after 42 steps 
+
+Sorting IC maps
+Calculating T- and S-modes 
+
+Writing results to : 
+  filtered_func_data.ica/melodic_IC
+  filtered_func_data.ica/melodic_Tmodes
+  filtered_func_data.ica/melodic_Smodes
+  filtered_func_data.ica/melodic_mix
+  filtered_func_data.ica/melodic_FTmix
+  filtered_func_data.ica/melodic_PPCA
+  filtered_func_data.ica/melodic_ICstats
+  filtered_func_data.ica/mask
+...done
+Creating report index page ...done
+
+
+Running Mixture Modelling on Z-transformed IC maps ...
+  IC map 1 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_1
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat1
+   creating report page ...    done
+  IC map 2 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_2
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat2
+   creating report page ...    done
+  IC map 3 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_3
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat3
+   creating report page ...    done
+  IC map 4 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_4
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat4
+   creating report page ...    done
+  IC map 5 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_5
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat5
+   creating report page ...    done
+  IC map 6 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_6
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat6
+   creating report page ...    done
+  IC map 7 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_7
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat7
+   creating report page ...    done
+  IC map 8 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_8
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat8
+   creating report page ...    done
+  IC map 9 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_9
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat9
+   creating report page ...    done
+  IC map 10 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_10
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat10
+   creating report page ...    done
+  IC map 11 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_11
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat11
+   creating report page ...    done
+  IC map 12 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_12
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat12
+   creating report page ...    done
+  IC map 13 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_13
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat13
+   creating report page ...    done
+  IC map 14 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_14
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat14
+   creating report page ...    done
+  IC map 15 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_15
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat15
+   creating report page ...    done
+  IC map 16 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_16
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat16
+   creating report page ...    done
+  IC map 17 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_17
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat17
+   creating report page ...    done
+  IC map 18 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_18
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat18
+   creating report page ...    done
+  IC map 19 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_19
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat19
+   creating report page ...    done
+  IC map 20 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_20
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat20
+   creating report page ...    done
+  IC map 21 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_21
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat21
+   creating report page ...    done
+  IC map 22 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_22
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat22
+   creating report page ...    done
+  IC map 23 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_23
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat23
+   creating report page ...    done
+  IC map 24 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_24
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat24
+   creating report page ...    done
+  IC map 25 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_25
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat25
+   creating report page ...    done
+  IC map 26 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_26
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat26
+   creating report page ...    done
+  IC map 27 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_27
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat27
+   creating report page ...    done
+  IC map 28 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_28
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat28
+   creating report page ...    done
+  IC map 29 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_29
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat29
+   creating report page ...    done
+  IC map 30 ... 
+   calculating mixture-model fit 
+   saving probability map:  filtered_func_data.ica/stats/probmap_30
+   re-scaling spatial maps ... 
+   thresholding ... 
+   alternative hypothesis test at p > 0.5
+   saving thresholded Z-stats image:  filtered_func_data.ica/stats/thresh_zstat30
+   creating report page ...    done
+
+Writing results to : 
+  filtered_func_data.ica/melodic_IC
+  filtered_func_data.ica/melodic_Tmodes
+  filtered_func_data.ica/melodic_Smodes
+  filtered_func_data.ica/melodic_mix
+  filtered_func_data.ica/melodic_FTmix
+  filtered_func_data.ica/melodic_PPCA
+  filtered_func_data.ica/melodic_ICstats
+  filtered_func_data.ica/mask
+...done
+
+
+ To view the output report point your web browser at filtered_func_data.ica/report/00index.html
+
+finished!
+

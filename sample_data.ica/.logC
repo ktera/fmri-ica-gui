@@ -1,0 +1,7 @@
+</pre><hr>Stats<br><pre>
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fsl_sub -T 30 -l logs -N feat4_ica -j 2272532  /space/raid/fmri/fsl-4.1.9-centos5_64/bin/melodic -i filtered_func_data -o filtered_func_data.ica -v --nobet --bgthreshold=3 --tr=2.0 --report --guireport=../../report.html -d 0 --mmthresh=0.5 --Ostats
+2272533
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fsl_sub -T 1 -l logs -N feat5_stop -j 2272533  /space/raid/fmri/fsl-4.1.9-centos5_64/bin/feat /space/raid/home/ktera/fmri-ica-gui/sample_data.ica/design.fsf -D /space/raid/home/ktera/fmri-ica-gui/sample_data.ica -stop
+2272534

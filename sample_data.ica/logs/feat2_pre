@@ -1,0 +1,52 @@
+</pre><hr>Prestats<br><pre>
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths /space/raid/home/ktera/fmri-ica-gui/sample_fmri prefiltered_func_data -odt float
+Total original volumes = 182
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslroi prefiltered_func_data example_func 91 1
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/mcflirt -in prefiltered_func_data -out prefiltered_func_data_mcf -mats -plots -refvol 91 -rmsrel -rmsabs
+refnum = 91
+Original_refvol = 91
+
+/bin/mkdir -p mc ; /bin/mv -f prefiltered_func_data_mcf.mat prefiltered_func_data_mcf.par prefiltered_func_data_mcf_abs.rms prefiltered_func_data_mcf_abs_mean.rms prefiltered_func_data_mcf_rel.rms prefiltered_func_data_mcf_rel_mean.rms mc
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fsl_tsplot -i prefiltered_func_data_mcf.par -t 'MCFLIRT estimated rotations (radians)' -u 1 --start=1 --finish=3 -a x,y,z -w 640 -h 144 -o rot.png 
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fsl_tsplot -i prefiltered_func_data_mcf.par -t 'MCFLIRT estimated translations (mm)' -u 1 --start=4 --finish=6 -a x,y,z -w 640 -h 144 -o trans.png 
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fsl_tsplot -i prefiltered_func_data_mcf_abs.rms,prefiltered_func_data_mcf_rel.rms -t 'MCFLIRT estimated mean displacement (mm)' -u 1 -w 640 -h 144 -a absolute,relative -o disp.png 
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths prefiltered_func_data_mcf -Tmean mean_func
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/bet2 mean_func mask -f 0.3 -n -m; /space/raid/fmri/fsl-4.1.9-centos5_64/bin/immv mask_mask mask
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths prefiltered_func_data_mcf -mas mask prefiltered_func_data_bet
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslstats prefiltered_func_data_bet -p 2 -p 98
+0.000000 685.728027 
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths prefiltered_func_data_bet -thr 68.5728027 -Tmin -bin mask -odt char
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslstats prefiltered_func_data_mcf -k mask -p 50
+561.986572 
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths mask -dilF mask
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths prefiltered_func_data_mcf -mas mask prefiltered_func_data_thresh
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths prefiltered_func_data_thresh -Tmean mean_func
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/susan prefiltered_func_data_thresh 421.489929 2.12314225053 3 1 1 mean_func 421.489929 prefiltered_func_data_smooth
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths prefiltered_func_data_smooth -mas mask prefiltered_func_data_smooth
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths prefiltered_func_data_smooth -mul 17.7940194628 prefiltered_func_data_intnorm
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths prefiltered_func_data_intnorm -bptf 25.0 -1 prefiltered_func_data_tempfilt
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths prefiltered_func_data_tempfilt filtered_func_data
+
+/space/raid/fmri/fsl-4.1.9-centos5_64/bin/fslmaths filtered_func_data -Tmean mean_func
+
+/bin/rm -rf prefiltered_func_data*
