@@ -29,7 +29,7 @@ function varargout = ICA_gui(varargin)
 %
 %
 % Kevin Terashima 2011
-% Last Modified by GUIDE v2.5 10-Jul-2012 11:02:47
+% Last Modified by GUIDE v2.5 26-Jul-2012 19:09:28
 
 %% ---------------   GUI initialization  -----------------------------
 % GUIDE GUI default creation and callback support
@@ -75,11 +75,14 @@ handles.Index = 1;
 handles.threshmap2 = '_thresh.png';
 handles.png = '.png';
 handles.txt = '.txt';
+handles.motion_par=0;
+handles.ica_home_path = pwd;
+handles.motion_home_path = pwd;
 
 %default view: all
 handles.view = 4;
 
-% Choose default command line output for ICA_gui_v1_1
+% Choose default command line output for ICA_gui
 handles.output = hObject;
 
 % Update handles structure
@@ -138,40 +141,32 @@ classified = handles.Classified;
 i = handles.Index;
 
 set(handles.numCom,'String',int2str(i)); %Current component number
-
 %if the component images exist
-
 % Display the png files for the component
 % thresholded map
-  if (exist([handles.threshmap1,int2str(i),handles.threshmap2],'file')*exist([handles.temporal,int2str(i),handles.png],'file')*exist([handles.power,int2str(i),handles.png],'file'))==0    
+  if exist([handles.threshmap1,int2str(i),handles.threshmap2],'file')==0  
 warndlg('Warning: Component images do not exist! Consider re-running MELODIC','Bad input');
 return;
   end
 
-
 axes(handles.axes1);
 imshow([handles.threshmap1,int2str(i),handles.threshmap2]);
 % temporal
-temporal_data=load([handles.temporal,int2str(i),handles.txt]);
+%temporal_data=load([handles.temporal,int2str(i),handles.txt]);
+temporal_data=handles.temporal;
 axes(handles.axes2);
-plot(temporal_data,'color','red');
-set(handles.axes2,'Xlim',[0 length(temporal_data)]);
+plot(temporal_data(:,i),'color','k');
+set(handles.axes2,'Xlim',[0 length(temporal_data)],'Color','none');
 title('temporal timecourse');
 xlabel('TR');
 ylabel('Normalized Response');
 %imshow([handles.temporal,int2str(i),handles.png]);
 
-% If motion parameters were loaded
-if handles.motion_par ~= 0
-   hold on
-   motion_par=handles.motion_par;
-   plot(motion_par(:,1),'color','green');
-end
-
 % power spectrum
-power_data=load([handles.power,int2str(i),handles.txt]);
+power_data=handles.power;
+%power_data=load([handles.power,int2str(i),handles.txt]);
 axes(handles.axes3);
-plot(power_data);
+plot(power_data(:,i));
 set(handles.axes3,'Xlim',[0 length(power_data)]);
 title('Powerspectrum of timecourse');
 xlabel('Frequency (in Hz / 100)');
@@ -238,12 +233,6 @@ set(handles.menu_view_un,'Enable','on');
 else
 set(handles.menu_view_un,'Enable','off');
 end
-
-set(handles.menu_view_sig,'Checked','off');
-set(handles.menu_view_bor,'Checked','off');
-set(handles.menu_view_noi,'Checked','off');
-set(handles.menu_view_un,'Checked','off');
-set(handles.menu_view_all,'Checked','on');
 
 handles.totalClassified = totalClassified;
 guidata(hObject, handles);
@@ -409,7 +398,7 @@ Answer=questdlg('Warning: Unsaved classification! Continue without saving?', ...
     end
 end
     
-ica_folder = uigetdir('/space/raid2/data/poldrack/CIDAR/organized_data/feat_analysis/level1/TS/baseline','Select .ica folder'); %load in ICA folder
+ica_folder = uigetdir(handles.ica_home_path,'Select .ica folder'); %load in ICA folder
 if isequal(ica_folder,0)
     return
 else
@@ -463,16 +452,21 @@ end
 % Initialize names
 handles.Index = 1;
 handles.threshmap1 = [ica_folder,'/report/IC_'];
-handles.temporal = [ica_folder,'/report/t'];
-handles.power = [ica_folder,'/report/f'];
+%handles.temporal = [ica_folder,'/report/t'];
+%handles.power = [ica_folder,'/report/f'];
+
+%Load arrays
+% Temporal timecourses
+handles.temporal = load(fullfile(ica_folder,'melodic_mix'));
+handles.power = load(fullfile(ica_folder,'melodic_FTmix')); 
 
 % Initialize Current view
 handles.viewArray = (1:length(handles.Classified))';
 
 % Enable buttons
-set(handles.pushbutton2,'Enable','on');
-set(handles.pushbutton3,'Enable','on');
-set(handles.pushbutton4,'Enable','on');
+set(handles.signal_button,'Enable','on');
+set(handles.noise_button,'Enable','on');
+set(handles.borderline_button,'Enable','on');
 set(handles.pushbutton5,'Enable','on');
 set(handles.pushbutton7,'Enable','on');
 set(handles.finishButton,'Enable','on');
@@ -482,6 +476,17 @@ set(handles.listbox1,'Enable','on');
 set(handles.menu_view_all,'Checked','on');
 set(handles.load_motion,'Enable','on');
 set(handles.note_box,'Enable','on');
+
+% Motion Graph Reset
+% Clear existing motion graph
+cla(handles.motion_axes);
+legend(handles.motion_axes,'hide')
+set(handles.motion_rot,'Enable','off');
+set(handles.motion_trans,'Enable','off');
+set(handles.motion_disp,'Enable','off');
+set(handles.motion_rot,'Checked','off');
+set(handles.motion_trans,'Checked','off');
+set(handles.motion_disp,'Checked','off');
 
 set(handles.note_box, 'String', handles.notes{handles.Index});
 guidata(hObject, handles);
@@ -601,22 +606,139 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-
 % --- Executes on button press in load_motion.
 function load_motion_Callback(hObject, eventdata, handles)
-% hObject    handle to load_motion (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-[par_file,path] = uigetfile('/space/raid2/data/poldrack/CIDAR/organized_data/feat_analysis/level1/TS/baseline/*.par','Select a motion .par file'); %load in ICA folder
-if isequal(par_file,0)
+% Loads in the motion directory generated by MCFLIRT
+% Following files must be in directory to load properly:
+% A .par file
+% abs.rms
+% rel.rms
+mc_folder = uigetdir(handles.motion_home_path, 'Select Motion Directory')
+if isequal(mc_folder,0)
     return
 else
-    [~,~,ext]=fileparts(par_file);
-    if isequal(ext,'.par');
-        motion_par=load([path,par_file]); % need to add condition to check if same # of TRs as components.
-    handles.motion_par = motion_par;
+    
+    par_file=dir(fullfile(mc_folder,'*.par'));
+    abs_rms_file=dir(fullfile(mc_folder,'*abs.rms'));
+    rel_rms_file=dir(fullfile(mc_folder,'*rel.rms'));
+    
+    if length(par_file)~=0 && length(abs_rms_file)~=0 && length(rel_rms_file)~=0
+        handles.mc_folder = mc_folder;
+        handles.motion_par = load(fullfile(mc_folder,par_file.name));
+        handles.abs_rms = load(fullfile(mc_folder,abs_rms_file.name));
+        handles.rel_rms = load(fullfile(mc_folder,rel_rms_file.name));
+        %set(handles.load_motion,'Enable','off');
+        guidata(hObject, handles);
+        handles.motionView=3; %default view is displacement
+        set(handles.motion_disp,'Checked','on');
+        
+        % Enable menu items:
+        set(handles.motion_rot,'Enable','on');
+        set(handles.motion_trans,'Enable','on');
+        set(handles.motion_disp,'Enable','on');
+        
+        % Find p-values of correlation with motion
+        %[~,handles.motion_corr]=corr(handles.temporal,[handles.motion_par handles.abs_rms handles.rel_rms]);
+        %[~,handles.motion_corr]=corr(handles.temporal,[handles.motion_par handles.abs_rms handles.rel_rms]);
+        
+        size(handles.temporal)
+        size(handles.motion_par)
+        size(handles.abs_rms)
+        size(handles.rel_rms)
+        RefreshMotionGraphs(handles);
     else
-        warndlg('Not a valid .par file!','Bad input');
+        warndlg('Not a valid motion folder!', 'Bad input');
         return
     end
 end
+
+
+% --- Executes on button press in auto_classify.
+function auto_classify_Callback(hObject, eventdata, handles)
+% hObject    handle to auto_classify (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+% --- Executes on button press in remove_noise.
+function remove_noise_Callback(hObject, eventdata, handles)
+% hObject    handle to remove_noise (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+%this button will be enabled once all components are classified. IT will
+%run fsl_regfilt to remove noise components.
+
+% --- Refreshes the motion graph. Executes each time motion parameters are
+% added or alternative motion graph is clicked
+function RefreshMotionGraphs(handles)
+% If motion parameters were loaded
+motion_par=handles.motion_par;
+abs_motion=handles.abs_rms;
+rel_motion=handles.rel_rms;
+axes(handles.motion_axes);
+
+hold on;
+
+switch handles.motionView
+    case 1
+        %view = 1;
+        %set(handles.menu_view_sig,'Checked','on');
+        x_motion=plot(motion_par(:,1),'color',[0.8 0.8 1],'hittest','off'); %light blue
+        y_motion=plot(motion_par(:,2),'color',[0.8 1 0.8],'hittest','off'); %light green
+        z_motion=plot(motion_par(:,3),'color',[1 0.8 0.8],'hittest','off'); %light red
+        set(handles.motion_axes,'YAxisLocation','right','Color','none','XColor','k','YColor','r','Xlim',[0 size(motion_par,1)]);
+        handles.motion_legend=legend('x','y','z');
+        ylabel('rot (radians)');
+    case 2
+        %view = 2;
+        %set(handles.menu_view_bor,'Checked','on');
+        x_motion=plot(motion_par(:,4),'color',[0.8 0.8 1],'hittest','off'); %light blue
+        y_motion=plot(motion_par(:,5),'color',[0.8 1 0.8],'hittest','off'); %light green
+        z_motion=plot(motion_par(:,6),'color',[1 0.8 0.8],'hittest','off'); %light red
+        set(handles.motion_axes,'YAxisLocation','right','Color','none','XColor','k','YColor','r','Xlim',[0 size(motion_par,1)]);
+        handles.motion_legend=legend('x','y','z');
+        ylabel('trans (mm)');
+    case 3
+        abs_motion=plot(abs_motion(:,1),'color',[0.8 0.8 1],'hittest','off'); %light blue
+        rel_motion=plot(rel_motion(:,1),'color',[0.8 1 0.8],'hittest','off'); %light green
+        set(handles.motion_axes,'YAxisLocation','right','Color','none','XColor','k','YColor','r','Xlim',[0 size(motion_par,1)]);
+        handles.motion_legend=legend('abs','rel');
+        ylabel('disp (mm)');
+end
+hold off;
+
+%guidata(handles);
+
+% This function loads in all the timecourses into the program into one
+% array
+
+% This function finds the correlation coefficient p-values for all
+% components and the motion parameters
+
+
+% --- Change view: view motion graph
+function Motion_Callback(hObject, eventdata,handles,str)
+
+% Uncheck all menu items
+set(handles.motion_rot,'Checked','off');
+set(handles.motion_trans,'Checked','off');
+set(handles.motion_disp,'Checked','off');
+
+% Clear existing motion graph
+cla(handles.motion_axes');
+
+switch str
+    case 'rot'
+        handles.motionView = 1;
+        set(handles.motion_rot,'Checked','on');
+    case 'trans'
+        handles.motionView = 2;
+        set(handles.motion_trans,'Checked','on');
+    case 'disp'
+        handles.motionView = 3;
+        set(handles.motion_disp,'Checked','on');
+end
+
+guidata(hObject, handles);
+RefreshMotionGraphs(handles);
