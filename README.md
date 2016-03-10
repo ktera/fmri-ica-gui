@@ -1,7 +1,9 @@
 fmri-ica-gui
 ============
 
-MATLAB GUI to assist in manual and automated classification of MELODIC ICA components
+MATLAB GUI to assist in manual and automated classification of MELODIC ICA components.
+
+NOTE: This tool should be considered legacy software, last updated in 2013. 
 
 Questions? Contact Kevin Terashima, kterashima@ucla.edu
 
